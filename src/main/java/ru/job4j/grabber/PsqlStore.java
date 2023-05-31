@@ -1,7 +1,6 @@
 package ru.job4j.grabber;
 
 import ru.job4j.grabber.models.Post;
-import ru.job4j.util.PropertiesUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -93,13 +92,5 @@ public class PsqlStore implements Store {
         String linkPost = resultSet.getString("link");
         LocalDateTime createdDate = resultSet.getTimestamp("created").toLocalDateTime();
         return new Post(postId, postName, linkPost, postText, createdDate);
-    }
-
-    public static void main(String[] args) {
-        Properties properties = PropertiesUtil.getProperties("app.properties");
-        Post post = new Post("name", "link2", "text", LocalDateTime.now());
-        new PsqlStore(properties).save(post);
-        System.out.println(new PsqlStore(properties).getAll());
-        System.out.println(new PsqlStore(properties).findById(1));
     }
 }

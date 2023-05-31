@@ -18,8 +18,6 @@ public class HabrCareerParse implements Parse {
 
     private final DateTimeParser dateTimeParser;
     private static final String SOURCE_LINK = "https://career.habr.com";
-    private static final String PAGE_LINK = String.format("%s/vacancies/java_developer?page=", SOURCE_LINK);
-    private static final int PAGE_COUNT = 1;
 
     public HabrCareerParse(DateTimeParser dateTimeParser) {
         this.dateTimeParser = dateTimeParser;
@@ -38,17 +36,6 @@ public class HabrCareerParse implements Parse {
         return descText.toString();
     }
 
-    public static void main(String[] args) {
-        HabrCareerParse habrCareerParse = new HabrCareerParse(new HabrCareerDateTimeParser());
-        for (int i = 1; i <= PAGE_COUNT; i++) {
-            String link = PAGE_LINK + i;
-            List<Post> postList = habrCareerParse.list(link);
-            for (Post post : postList) {
-                System.out.println(post.getTitle() + " " + post.getLink());
-            }
-        }
-    }
-
     @Override
     public List<Post> list(String link) {
         List<Post> postList = new ArrayList<>();
@@ -65,7 +52,7 @@ public class HabrCareerParse implements Parse {
                 Element linkElement = titleElement.child(0);
                 String title = titleElement.text();
                 String vacancyLink = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-                String description = retrieveDescription(link);
+                String description = retrieveDescription(vacancyLink);
                 postList.add(new Post(title, vacancyLink, description, date));
             });
         } catch (IOException e) {

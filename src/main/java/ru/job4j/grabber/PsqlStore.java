@@ -13,8 +13,6 @@ public class PsqlStore implements Store {
 
     private  static Connection cnn;
 
-    private static Properties properties = PropertiesUtil.getProperties("app.properties");
-
     public PsqlStore(Properties cfg) {
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
@@ -98,6 +96,7 @@ public class PsqlStore implements Store {
     }
 
     public static void main(String[] args) {
+        Properties properties = PropertiesUtil.getProperties("app.properties");
         Post post = new Post("name", "link2", "text", LocalDateTime.now());
         new PsqlStore(properties).save(post);
         System.out.println(new PsqlStore(properties).getAll());

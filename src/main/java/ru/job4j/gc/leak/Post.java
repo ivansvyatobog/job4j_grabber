@@ -33,11 +33,6 @@ public class Post {
     /*остальные getter/setter*/
 
     @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -52,5 +47,10 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(id, text, comments);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
     }
 }

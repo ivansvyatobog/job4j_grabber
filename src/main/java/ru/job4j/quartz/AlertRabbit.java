@@ -15,6 +15,7 @@ import static org.quartz.SimpleScheduleBuilder.*;
 public class AlertRabbit {
 
     private static final Properties PROPERTIES = PropertiesUtil.getProperties("rabbit.properties");
+
     public static void main(String[] args) {
         int interval = Integer.parseInt(PROPERTIES.getProperty("rabbit.interval"));
         try (Connection connection = DriverManager.getConnection(PROPERTIES.getProperty("db.url"),
